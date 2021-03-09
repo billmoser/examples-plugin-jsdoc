@@ -18,13 +18,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/billmoser/examples-plugin-jsdoc"
+    "url": "https://github.com/billmoser/examples-plugin-jsdoc.git"
   },
   "keywords": [
     "jsdoc",
     "plugin",
     "examples"
   ],
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "author": "Bill Moser",
   "license": "MIT",
   "devDependencies": {
