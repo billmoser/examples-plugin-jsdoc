@@ -1,0 +1,23 @@
+
+ {
+    "testRegex": "/*.jsdoc.test.js$",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/{!(testing),}.js"
+    ],
+    "coverageReporters": ["lcov", "text"],
+    "coverageDirectory": "test-coverage",
+    "coverageThreshold": {
+        "global": {
+            "branches": 0,
+            "functions": 0,
+            "lines": 0,
+            "statements": 0
+        }
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/example/"
+    ],
+    "moduleDirectories": ["node_modules", "src"]
+}

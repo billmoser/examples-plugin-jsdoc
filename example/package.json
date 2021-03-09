@@ -1,0 +1,21 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "example of jsdoc-examples plugin usage",
+  "scripts": {
+    "predocs": "rm -rf docs",
+    "docs": "jsdoc --configure .jsdoc.json --verbose",
+    "test": "jest --verbose test",
+    "jasmine-test": "jasmine --reporter=jasmine-console-reporter test/examples.test.js",
+    "mocha-test": "mocha test/examples.test.js"
+  },
+  "devDependencies": {
+    "docdash": "^1.2.0",
+    "expect": "^26.6.2",
+    "jasmine": "^3.6.4",
+    "jasmine-console-reporter": "^3.1.0",
+    "jest": "^26.6.3",
+    "jsdoc": "^3.6.6",
+    "mocha": "^8.3.1"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "jsdoc-examples",
+  "version": "1.0.0",
+  "description": "jsdoc plugin to add examples from external files",
+  "main": "index.js",
+  "scripts": {
+    "gitdown": "gitdown ./.README/README.md --output-file ./README.md",
+    "predocs": "rm -rf ./docs && mkdir docs && npm run gitdown && npm run example-docs && mv ./example/docs ./docs/example-docs",
+    "docs": "jsdoc --configure .jsdoc.json --verbose",
+    "complexity": "eslint index.js src/*.js test/*.js example/src/*.js example/test/*.js",
+    "style": "standard index.js src/*.js test/*.js example/src/*.js example/test/*.js",
+    "pretest": "npm run complexity && npm run style",
+    "test": "jest --verbose test",
+    "example-install": "npm --no-bin-links --prefix ./example install ./example",
+    "example-test": "npm run --prefix ./example test",
+    "example-docs": "npm run --prefix ./example docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/billmoser/examples-plugin-jsdoc"
+  },
+  "keywords": [
+    "jsdoc",
+    "plugin",
+    "examples"
+  ],
+  "author": "Bill Moser",
+  "license": "MIT",
+  "devDependencies": {
+    "docdash": "^1.2.0",
+    "eslint": "^7.21.0",
+    "gitdown": "^3.1.4",
+    "jest": "^26.6.3",
+    "jsdoc": "^3.6.6",
+    "standard": "^16.0.3"
+  },
+  "dependencies": {
+    "vm2": "^3.9.2"
+  }
+}
