@@ -1,4 +1,4 @@
- // the test function -- require('examples-plugin-jsdoc') in your app
+// the test function -- require('examples-plugin-jsdoc') in your app
 const testAll = require('../../index.js').testAll
 
 // don't forget to require the modules you want to test examples for
