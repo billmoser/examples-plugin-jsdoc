@@ -1,3 +1,5 @@
+// quick and dirty replacement for gitdown, since gitdown won't
+// work for me in travis
 const fs = require('fs')
 const lineReader = require('line-reader');
 
