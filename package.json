@@ -25,9 +25,6 @@
     "plugin",
     "examples"
   ],
-  "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
-  },
   "author": "Bill Moser",
   "license": "MIT",
   "devDependencies": {
