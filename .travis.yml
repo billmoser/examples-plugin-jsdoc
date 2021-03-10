@@ -28,6 +28,11 @@ script:
 # this sectiion is for deployment of the generated
 # documentation to github pages
 #
+before_deploy:
+  - if [ "$TRAVIS_BRANCH" == "main" ];then
+    git checkout main;
+    fi;
+
 deploy:
   provider: pages
   skip_cleanup: true
