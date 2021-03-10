@@ -11,8 +11,8 @@
 * [Usage option 1: all examples for a module in a single file](#usage-option-1-all-examples-for-a-module-in-a-single-file)
 * [Usage option 2: examples for each function in a separate file](#usage-option-2-examples-for-each-function-in-a-separate-file)
 
-Note for those viewing this on npmjs.org: the real documentation is at [Github Pages](https://billmoser.github.io/examples-plugin-jsdoc/).  If not
-viewing this from the Github pages site, you may run into broken links, and inexplicable references to sidebars.
+Note for those viewing this on npmjs.org or github.com: the full documentation is at [Github Pages](https://billmoser.github.io/examples-plugin-jsdoc/).  If not
+viewing this from the Github pages site, you may run into a broken link or two.
 
 # Purpose
 
