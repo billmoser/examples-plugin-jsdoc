@@ -7,6 +7,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 {"gitdown": "contents", "maxLevel": 4}
 
+Note for those viewing this on npmjs.org: the real documentation is at [Github Pages](https://billmoser.github.io/examples-plugin-jsdoc/).  If not
+viewing this from the Github pages site, you may run into broken links, and inexplicable references to sidebars.
+
 # Purpose
 
 With this plugin, you write your examples as plain javascript, and then
