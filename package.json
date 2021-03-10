@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "gitdown": "gitdown ./.README/README.md --output-file ./README.md",
-    "predocs": "rm -rf ./docs && mkdir docs && npm run gitdown && npm run example-docs && mv ./example/docs ./docs/example-docs",
-    "xpredocs": "rm -rf ./docs && mkdir docs && npm run example-docs && mv ./example/docs ./docs/example-docs",
+    "xpredocs": "rm -rf ./docs && mkdir docs && npm run gitdown && npm run example-docs && mv ./example/docs ./docs/example-docs",
+    "predocs": "rm -rf ./docs && mkdir docs && npm run example-docs && mv ./example/docs ./docs/example-docs",
     "docs": "jsdoc --configure .jsdoc.json --verbose",
     "complexity": "eslint index.js src/*.js test/*.js example/src/*.js example/test/*.js",
     "style": "standard index.js src/*.js test/*.js example/src/*.js example/test/*.js",
