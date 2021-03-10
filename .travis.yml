@@ -16,6 +16,7 @@ before_install:
 script:
   - npm test # needed for basic travis build (otherwise, why bother)
   - npm run example-install # for doc generation
+  - git branch
   - npm run docs
   - codecov  # needed only for codecov.io
 
