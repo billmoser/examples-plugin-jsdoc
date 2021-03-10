@@ -6,11 +6,6 @@ language: node_js
 node_js: 
   - 14
 
-git:
-  depth: false
-#env:
-#  - TRAVIS_BRANCH=main
-
 #######################################################################
 #
 # ci run 
@@ -24,17 +19,11 @@ script:
   - npm run docs
   - codecov  # needed only for codecov.io
 
-#  - git branch
-
 #######################################################################
 #
 # this sectiion is for deployment of the generated
 # documentation to github pages
 #
-#before_deploy:
-#  - if [ "$TRAVIS_BRANCH" == "main" ];then
-#   git checkout main;
-#    fi;
 
 deploy:
   provider: pages
