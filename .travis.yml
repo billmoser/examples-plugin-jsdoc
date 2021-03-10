@@ -6,8 +6,8 @@ language: node_js
 node_js: 
   - 14
 
-env:
-  - TRAVIS_BRANCH=main
+#env:
+#  - TRAVIS_BRANCH=main
 
 #######################################################################
 #
@@ -19,19 +19,20 @@ before_install:
 script:
   - npm test # needed for basic travis build (otherwise, why bother)
   - npm run example-install # for doc generation
-  - git branch
   - npm run docs
   - codecov  # needed only for codecov.io
+
+#  - git branch
 
 #######################################################################
 #
 # this sectiion is for deployment of the generated
 # documentation to github pages
 #
-before_deploy:
-  - if [ "$TRAVIS_BRANCH" == "main" ];then
-    git checkout main;
-    fi;
+#before_deploy:
+#  - if [ "$TRAVIS_BRANCH" == "main" ];then
+#   git checkout main;
+#    fi;
 
 deploy:
   provider: pages
