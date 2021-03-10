@@ -6,6 +6,9 @@ language: node_js
 node_js: 
   - 14
 
+env:
+  - TRAVIS_BRANCH=main
+
 #######################################################################
 #
 # ci run 
