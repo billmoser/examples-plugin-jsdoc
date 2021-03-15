@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>plugin.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-plugin.html">plugin</a><ul class='methods'><li data-type='method'><a href="module-plugin.html#~defineTags">defineTags</a></li><li data-type='method'><a href="module-plugin.html#~newDoclet">newDoclet</a></li></ul></li><li><a href="module-testing.html">testing</a><ul class='methods'><li data-type='method'><a href="module-testing.html#~testAll">testAll</a></li></ul></li><li><a href="module-utils.html">utils</a><ul class='methods'><li data-type='method'><a href="module-utils.html#.bodyString">bodyString</a></li><li data-type='method'><a href="module-utils.html#~examples">examples</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">plugin.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module plugin
+ */
+
+const fs = require('fs')
+const path = require('path')
+const utils = require('./utils.js')
+
+/* this allows this module to be tested outside of the jsdoc context */
+let logger
+try {
+  logger = require('jsdoc/util/logger')
+} catch (e) {
+  logger = { info: function () {} } // console.log
+}
+
+// The directory from which following examples will be taken
+let _examplesDir = ''
+
+// Holds contents of examples file (JSON) for each class or module
+let _examples = {}
+
+// used to avoid double file loads -- jsdoc seems to duplicate tags
+let previousValue = null
+let previousFilename = null
+
+/**
+ * Adds example text to '@examples'-tagged doclets.
+ * If examples already exist, they are appended to.
+ * @param {Object} doclet - the current JSDoc doclet
+ */
+function newDoclet ({ doclet }) {
+  // console.log(JSON.stringify(doclet, null, 2))
+  const name = doclet.name
+  let examples = (Array.isArray(_examples)) ? _examples : _examples[name]
+  examples = examples || _readExamples(name)
+  if (!examples) return
+
+  doclet.examples = doclet.examples || [] // ensure doclet has examples list
+  // add each example to the doclet's list
+  for (const example of examples) {
+    const lines = utils.bodyString(example.code)
+    if ('expect' in example) { // add the result at the end, if needed
+      lines.push('// &lt;= ' + JSON.stringify(example.expect))
+    }
+    if (lines[0].startsWith('// caption:')) {
+      const str = lines[0].replace('// caption:', '').trim()
+      lines[0] = '&lt;caption>' + str + '&lt;/caption>'
+    }
+    doclet.examples.push(lines.join('\n'))
+  }
+
+  if (Array.isArray(_examples)) _examples = false
+}
+
+/**
+ * Defines the '@examples' tag, and the action to be taken
+ * when the tag is encountered
+ * @param {*} dictionary
+ */
+function defineTags (dictionary) {
+  dictionary.defineTag('examples', {
+    mustHaveValue: true,
+    onTagged: function (doclet, tag) {
+      const filename = doclet.meta.filename
+      if (filename !== previousFilename) _examplesDir = ''
+      previousFilename = filename
+      const value = tag.value
+      if (value === previousValue) return // avoid double-processing
+      previousValue = value
+      if (fs.existsSync(value) &amp;&amp; fs.lstatSync(value).isDirectory()) {
+        logger.info('examples directory:', value)
+        _examplesDir = value
+        _examples = {} // null
+      } else { // read example file
+        _readExamples(doclet.name, value)
+      }
+    }
+  })
+}
+
+function _readExamples (name, fn) {
+  const expath = path.resolve(_examplesDir, fn || name + '.js')
+  if (fs.existsSync(expath)) {
+    logger.info('Reading @examples: ', expath)
+    _examples = utils.examples(expath)
+    if (_examples.examples) {
+      if (_examples.setup) {
+        _examples.examples[name] = [{ code: _examples.setup }]
+      }
+      _examples = _examples.examples
+    }
+  }
+  return (Array.isArray(_examples)) ? _examples : _examples[name]
+}
+
+module.exports = {
+  handlers: { newDoclet: newDoclet },
+  defineTags: defineTags
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Mar 15 2021 15:12:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

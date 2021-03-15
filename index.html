@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-plugin.html">plugin</a><ul class='methods'><li data-type='method'><a href="module-plugin.html#~defineTags">defineTags</a></li><li data-type='method'><a href="module-plugin.html#~newDoclet">newDoclet</a></li></ul></li><li><a href="module-testing.html">testing</a><ul class='methods'><li data-type='method'><a href="module-testing.html#~testAll">testAll</a></li></ul></li><li><a href="module-utils.html">utils</a><ul class='methods'><li data-type='method'><a href="module-utils.html#.bodyString">bodyString</a></li><li data-type='method'><a href="module-utils.html#~examples">examples</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme usertext">
+        <article><p><a href="https://travis-ci.org/billmoser/examples-plugin-jsdoc"><img src="https://travis-ci.org/billmoser/examples-plugin-jsdoc.svg?branch=main" alt="Travis CI w/ Logo"></a>
+<a href="https://codecov.io/gh/billmoser/examples-plugin-jsdoc"><img src="https://codecov.io/gh/billmoser/examples-plugin-jsdoc/branch/main/graph/badge.svg" alt="CodeCov"></a>
+<a href="https://codebeat.co/projects/github-com-billmoser-examples-plugin-jsdoc-main"><img src="https://codebeat.co/badges/11522fef-973b-41d8-b1ea-70da1c3cb292" alt="codebeat badge"></a>
+<a href="https://billmoser.github.io/examples-plugin-jsdoc/"><img src="https://img.shields.io/badge/docs-GHpages-blue.svg" alt="Generic badge"></a>
+<a href="https://github.com/feross/standard"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat" alt="js-standard-style"></a>
+<a href="https://snyk.io/test/github/billmoser/examples-plugin-jsdoc?targetFile=package.json"><img src="https://snyk.io/test/github/billmoser/examples-plugin-jsdoc/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a></p>
+<ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage-option-1-all-examples-for-a-module-in-a-single-file">Usage option 1: all examples for a module in a single file</a></li>
+<li><a href="#usage-option-2-examples-for-each-function-in-a-separate-file">Usage option 2: examples for each function in a separate file</a></li>
+</ul>
+<p><a name="purpose"></a></p>
+<h1>Purpose</h1>
+<p>With this plugin, you write your examples as plain javascript, and then
+include them</p>
+<ul>
+<li>in your jsdoc documentation with the <code>@examples</code> tag, and</li>
+<li>in your test suites with a simple test file.</li>
+</ul>
+<p>You'll need to be familiar with <a href="https://jsdoc.app/index.html">JSDoc</a>, and with a testing framework such as
+<a href="https://jestjs.io/">jest</a>, <a href="https://jasmine.github.io/">jasmine</a>, or <a href="https://mochajs.org/">mocha</a> (or any other framework that can supply globals for <em>describe</em>, <em>expect</em>, and <em>it</em> that work in the usual way).</p>
+<p>Here's a look at the <a href="https://billmoser.github.io/examples-plugin-jsdoc/example-docs/index.html">end result</a></p>
+<p><a name="installation"></a></p>
+<h1>Installation</h1>
+<pre class="prettyprint source lang-sh"><code>npm install --save-dev jsdoc-examples
+</code></pre>
+<p>Note that the <em>example</em> directory contains a complete usage example for the plugin for both documentation, and for testing in each of the three test frameworks mentioned above.</p>
+<p><a name="usage-option-1-all-examples-for-a-module-in-a-single-file"></a></p>
+<h1>Usage option 1: all examples for a module in a single file</h1>
+<p>All of the examples for a module may be placed in a single file.  The <code>examples</code> object contains entries for each function that you wish to include
+examples for in your documentation and tests.  Optionally, a <code>setup</code> function can be specified.  The <code>setup</code> code will be added to the top level module documentation, and will be called before each example when tests are run.</p>
+<p>Each item in the <code>examples</code> object is itself an array of specifications
+corresponding to
+the examples you wish to document/test for a particular function.  Each object has a key for the example <code>code</code>, and optionally, an <code>expect</code> key whose value is the expected result of running the example.  There is no need to include the <code>expect</code> entry if the example does not return a result.</p>
+<p>The examples file must export a single function named <code>f</code>, which takes an instance of the module as its sole argument.  If no setup is required, <code>f</code>
+may return the examples array directly.  If setup code is required, <code>f</code> must
+return an object with the form <code>{examples: examples, setup: setup}</code>.  The export must be of the form <code>module.exports =</code>, even if your project uses es6 modules.  This example provides more details:</p>
+<pre class="prettyprint source lang-javascript"><code>module.exports = function f (core) {
+
+  // this will appear in an 'Example' section just beneath the module description
+  function setup () {
+    // caption: Core setup
+    core.reset()
+  }
+
+  const examples = {
+    // each function has it's own named examples section
+    addCore: [{ 
+        code: () => { // start of function must be on its own line
+          /*
+           * all lines of the function body proper (including comments like
+           * this, and any lines of code) will show up in the documentation,
+           * except for lines ending in: '// skip'
+           */
+          const result = core.addCore(2)
+          return result // skip
+        }, // function closing bracket must be on its own line
+        expect: 2 // specify a result for both test verification and display
+      }, {
+        code: () => {
+          // This is a simple example:
+          core.addCore(1)
+        }
+      }, {
+        code: () => {
+          core.addCore(2)
+        }
+      }],
+
+    numCores: [{
+        code: () => {
+          // caption: a superfluous caption
+          const result = core.numCores()
+        }
+    }]
+  }
+
+  return { examples: examples, setup: setup }
+}
+
+</code></pre>
+<p>In order to include the examples in your documentation, simply add an
+<code>@examples</code> tag containing the path to your examples in the top-level module
+documentation, as shown here:</p>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * @module core
+ * @description desc of core
+ * If '@examples' is a file, all examples will be loaded from there:
+ * @examples ./test/data/examples/core-examples.js
+ */
+
+let _numCores = 0
+
+/**
+ * @description If '@examples' ends in .js, it's assumed to
+ * contain examples for this function
+ * @param {number} num
+ * @returns {number} zero
+ */
+function addCore (num = 1) {
+  _numCores += num
+  return _numCores
+}
+
+/**
+ * @description ns desc
+ * @returns {number} number of cores
+ */
+function numCores () {
+  return _numCores
+}
+
+/**
+ * No examples yet...
+ */
+function reset () {
+  _numCores = 0
+}
+
+module.exports = { addCore: addCore, numCores: numCores, reset: reset }
+
+</code></pre>
+<p>To include the examples in your testing, create a <em>.test.js</em> file that uses this plugin's <code>testAll</code> to run the tests, as in this example:</p>
+<pre class="prettyprint source lang-javascript"><code>// the test function -- require('examples-plugin-jsdoc') in your app
+const testAll = require('../../index.js').testAll
+
+// don't forget to require the modules you want to test examples for
+const core = require('../src/core.js')
+const Foo = require('../src/Foo.js')
+
+// only needed for mocha
+global.expect = global.expect || require('expect')
+
+testAll([
+  // test info for the core module
+  {
+    examples: './test/data/examples/core-examples.js',
+    module: core
+  },
+  // test info for the Foo module
+  {
+    examples: './test/data/examples/Foo',
+    module: Foo
+  }
+])
+
+</code></pre>
+<p><a name="usage-option-2-examples-for-each-function-in-a-separate-file"></a></p>
+<h1>Usage option 2: examples for each function in a separate file</h1>
+<p>Alternatively, separate examples files can be used to document a module's functions.  To use this method for a module, create a directory for the examples files.  Then, for each function, add a file (named for the function) to contain the examples for that function.  The format of these files is similar to
+the one above, but here, there is no need to tag the example with the function name.  So, <code>examples</code> is now just the array of specifications described above.
+As above, each file may include a <code>setup</code> function, and must export the function <code>f</code>.  Here's an example with more details:</p>
+<pre class="prettyprint source lang-javascript"><code>module.exports = function f (Foo) {
+  const examples = [
+    {
+      code: () => {
+        // this is how to instantiate
+        let foo = new Foo(2)
+      }
+    }
+  ]
+
+  return examples
+}
+</code></pre>
+<p>In order to include the examples in your documentation, simply add an
+<code>@examples</code> tag containing the path to your examples <em>directory</em> in the top-level module documentation, as shown here:</p>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * Represents all foos
+ * If the '@examples' path is a directory, it's assumed to contain
+ * examples files for each function, named as '&lt;function name>.js'
+ * @examples ./test/data/examples/Foo
+ */
+class Foo {
+  /**
+   * Start with a number
+   * @param {*} num a number
+   */
+  constructor (num) {
+    this.num = num
+  }
+
+  /**
+   * What is the bar of str?
+   * @param {*} str
+   */
+  bar (str) {
+    return str + this.num
+  }
+
+  /**
+   * Resets this.num
+   * @param {*} num
+   */
+  reset (num) {
+    this.num = num
+  }
+}
+
+module.exports = Foo
+
+</code></pre>
+<p>As for option 1, to include the examples in your testing, create a <em>.test.js</em> file that uses this plugin's <code>testAll</code> to run the tests.</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Mon Mar 15 2021 15:12:57 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
