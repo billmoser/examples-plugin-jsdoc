@@ -1,6 +1,6 @@
 {
   "name": "examples-plugin-jsdoc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "jsdoc plugin to add examples from external files",
   "main": "index.js",
   "scripts": {
