@@ -4,8 +4,8 @@
   "description": "jsdoc plugin to add examples from external files",
   "main": "index.js",
   "scripts": {
-    "mdpp": "node scripts/mdpp.js .README.md README.md",
-    "predocs": "rm -rf ./docs && mkdir docs && npm run mdpp && npm run example-docs && mv ./example/docs ./docs/example-docs",
+    "gitdown": "gitdown ./.README.md --output-file ./README.md",
+    "predocs": "rm -rf ./docs && rm -rf ./example/docs && mkdir docs && npm run example-docs && mv ./example/docs ./docs/example-docs",
     "docs": "jsdoc --configure .jsdoc.json --verbose",
     "complexity": "eslint index.js src/*.js test/*.js example/src/*.js example/test/*.js",
     "style": "standard index.js src/*.js test/*.js example/src/*.js example/test/*.js",
@@ -29,9 +29,9 @@
   "devDependencies": {
     "docdash": "^1.2.0",
     "eslint": "^7.21.0",
+    "gitdown": "^3.1.4",
     "jest": "^26.6.3",
     "jsdoc": "^3.6.6",
-    "line-reader": "^0.4.0",
     "standard": "^16.0.3"
   },
   "dependencies": {

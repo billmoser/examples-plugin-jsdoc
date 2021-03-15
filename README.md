@@ -11,9 +11,8 @@
 * [Usage option 1: all examples for a module in a single file](#usage-option-1-all-examples-for-a-module-in-a-single-file)
 * [Usage option 2: examples for each function in a separate file](#usage-option-2-examples-for-each-function-in-a-separate-file)
 
-Note for those viewing this on npmjs.org or github.com: the full documentation is at [Github Pages](https://billmoser.github.io/examples-plugin-jsdoc/).  If not
-viewing this from the Github pages site, you may run into a broken link or two.
 
+<a name="purpose"></a>
 # Purpose
 
 With this plugin, you write your examples as plain javascript, and then
@@ -24,9 +23,9 @@ include them
 You'll need to be familiar with [JSDoc](https://jsdoc.app/index.html), and with a testing framework such as
 [jest](https://jestjs.io/), [jasmine](https://jasmine.github.io/), or [mocha](https://mochajs.org/) (or any other framework that can supply globals for *describe*, *expect*, and *it* that work in the usual way).
 
-Here's a look at the 
-<a href="./example-docs/index.html" target="_blank">end result</a>.  For reference, the sidebar links to documentation for this plugin's source code.  There's no need to look at this as an end-user of the plugin.
+Here's a look at the [end result](https://billmoser.github.io/examples-plugin-jsdoc/example-docs/index.html)
 
+<a name="installation"></a>
 # Installation
 
 ```sh
@@ -34,6 +33,7 @@ npm install --save-dev jsdoc-examples
 ```
 Note that the *example* directory contains a complete usage example for the plugin for both documentation, and for testing in each of the three test frameworks mentioned above.
 
+<a name="usage-option-1-all-examples-for-a-module-in-a-single-file"></a>
 # Usage option 1: all examples for a module in a single file
 
 All of the examples for a module may be placed in a single file.  The `examples` object contains entries for each function that you wish to include 
@@ -135,7 +135,10 @@ module.exports = { addCore: addCore, numCores: numCores, reset: reset }
 ```
 To include the examples in your testing, create a *.test.js* file that uses this plugin's `testAll` to run the tests, as in this example:
 ```javascript
+// the test function -- require('examples-plugin-jsdoc') in your app
 const testAll = require('../../index.js').testAll
+
+// don't forget to require the modules you want to test examples for
 const core = require('../src/core.js')
 const Foo = require('../src/Foo.js')
 
@@ -143,16 +146,21 @@ const Foo = require('../src/Foo.js')
 global.expect = global.expect || require('expect')
 
 testAll([
+  // test info for the core module
   {
     examples: './test/data/examples/core-examples.js',
     module: core
-  }, {
+  },
+  // test info for the Foo module
+  {
     examples: './test/data/examples/Foo',
     module: Foo
-  }])
+  }
+])
 
 ```
 
+<a name="usage-option-2-examples-for-each-function-in-a-separate-file"></a>
 # Usage option 2: examples for each function in a separate file
 
 Alternatively, separate examples files can be used to document a module's functions.  To use this method for a module, create a directory for the examples files.  Then, for each function, add a file (named for the function) to contain the examples for that function.  The format of these files is similar to
